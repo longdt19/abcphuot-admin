@@ -1,5 +1,9 @@
 <template>
 <section>
+  <div class="">
+    <el-button @click="$refs.create_sim.dialogFormVisible = true">Tạo mới</el-button>
+  </div>
+
   <el-table :data="tableData" style="width: 100%">
     <el-table-column label="Nhà mạng" header-align="center" align="center">
       <template slot-scope="scope">
@@ -21,8 +25,16 @@
 
     <el-table-column label="Thao tác" header-align="center" align="center">
       <template slot-scope="scope">
-        <el-button size="mini" type="warning">Sửa</el-button>
-        <el-button size="mini" type="danger">Xóa</el-button>
+        <el-button size="mini" type="warning"
+          @click="$refs.edit_sim.open(scope.row)"
+        >
+          Sửa
+        </el-button>
+        <el-button size="mini" type="danger"
+          @click="$refs.delete_sim.open()"
+        >
+          Xóa
+        </el-button>
       </template>
     </el-table-column>
   </el-table>
@@ -30,11 +42,19 @@
     <el-pagination layout="prev, pager, next" :total="50">
     </el-pagination>
   </div>
+  <create-sim-component ref="create_sim" />
+  <edit-sim-component ref="edit_sim" />
+  <delete-sim-component ref="delete_sim" />
 </section>
 </template>
 
 <script>
+import CreateSimComponent from './create'
+import EditSimComponent from './edit'
+import DeleteSimComponent from './delete'
+
 export default {
+  components: { CreateSimComponent, EditSimComponent, DeleteSimComponent },
   data () {
     return {
       tableData: [
@@ -55,6 +75,8 @@ export default {
         }
       ]
     }
+  },
+  methods: {
   }
 }
 </script>

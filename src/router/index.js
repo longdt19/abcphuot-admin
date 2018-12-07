@@ -2,8 +2,8 @@ import Vue from 'vue'
 import Router from 'vue-router'
 
 import Layout from '@/components/layout'
-import SimList from '@/components/sim/list'
-import WifiList from '@/components/wifi/list'
+import SimList from '@/components/sim'
+import WifiList from '@/components/wifi'
 import BlogList from '@/components/blog/list'
 
 Vue.use(Router)

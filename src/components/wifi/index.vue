@@ -1,5 +1,9 @@
 <template>
 <section>
+  <div class="">
+    <el-button @click="$refs.create_wifi.dialogFormVisible = true">Tạo mới</el-button>
+  </div>
+
   <el-table :data="tableData" style="width: 100%">
     <el-table-column label="Tên quốc gia" header-align="center" align="center">
       <template slot-scope="scope">
@@ -51,8 +55,16 @@
 
     <el-table-column label="Thao tác" header-align="center" align="center">
       <template slot-scope="scope">
-        <el-button size="mini" type="warning">Sửa</el-button>
-        <el-button size="mini" type="danger">Xóa</el-button>
+        <el-button size="mini" type="warning"
+          @click="$refs.edit_wifi.open(scope.row)"
+        >
+          Sửa
+        </el-button>
+        <el-button size="mini" type="danger"
+          @click="$refs.delete_wifi.open (scope.row)"
+        >
+          Xóa
+        </el-button>
       </template>
     </el-table-column>
   </el-table>
@@ -60,11 +72,20 @@
     <el-pagination layout="prev, pager, next" :total="50">
     </el-pagination>
   </div>
+
+  <create-wifi-component ref="create_wifi" />
+  <edit-wifi-component ref="edit_wifi" />
+  <delete-wifi-component ref="delete_wifi" />
 </section>
 </template>
 
 <script>
+import CreateWifiComponent from './create'
+import EditWifiComponent from './edit'
+import DeleteWifiComponent from './delete'
+
 export default {
+  components: { CreateWifiComponent, EditWifiComponent, DeleteWifiComponent },
   data () {
     return {
       tableData: [
