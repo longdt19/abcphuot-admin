@@ -36,16 +36,19 @@
   </el-form>
   <span slot="footer" class="dialog-footer">
     <el-button @click="dialogFormVisible = false">Hủy bỏ</el-button>
-    <el-button type="primary" @click="dialogFormVisible = false">Xác nhận</el-button>
+    <el-button type="primary" @click="create_wifi" :loading="loading">Xác nhận</el-button>
   </span>
 </el-dialog>
 </template>
 
 <script>
+import { WIFI_URL } from '@/constants/endpoints'
+
 export default {
   data () {
     return {
       dialogFormVisible: false,
+      loading: false,
       country: '',
       internet_name: '',
       connection: null,
@@ -60,6 +63,31 @@ export default {
   methods: {
     open () {
       this.dialogFormVisible = true
+    },
+    async create_wifi () {
+      if (this.loading) return
+      this.loading = true
+
+      const data = {
+        'country': this.country,
+        'internet_name': this.internet_name,
+        'connection': this.connection,
+        'speed_download': this.speed_download,
+        'speed_upload': this.speed_upload,
+        'information': this.information,
+        'prepayment': this.prepayment,
+        'price_day': this.price_day
+      }
+      const response = await this.$services.do_request('post', WIFI_URL, data)
+      this.loading = false
+
+      if (response.status === 200) {
+        this.$emit('wifi_created', response.data)
+        this.$message.success('Tạo wifi thành công')
+        this.dialogFormVisible = false
+      } else {
+        this.$message.error('Tạo wifi thất bại')
+      }
     }
   }
 }

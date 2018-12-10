@@ -10,6 +10,7 @@ import '@/styles/index.scss' // global css
 import App from './App'
 import router from './router'
 import store from './store'
+import axios from './plugins/axios'
 
 import {mapGetters} from 'vuex'
 
@@ -19,6 +20,7 @@ Vue.use(Element, {
 })
 
 moment.locale('vi')
+Vue.use(axios)
 // Vue.use(ElementUI, { locale })
 
 Vue.config.productionTip = false
@@ -41,6 +43,9 @@ const createApp = () => {
     router,
     store,
     components: {App},
+    created () {
+      this.$services.init_context(this)
+    },
     template: '<App/>'
   })
 }

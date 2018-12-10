@@ -55,14 +55,10 @@
 
     <el-table-column label="Thao tác" header-align="center" align="center">
       <template slot-scope="scope">
-        <el-button size="mini" type="warning"
-          @click="$refs.edit_wifi.open(scope.row)"
-        >
+        <el-button size="mini" type="warning" @click="$refs.edit_wifi.open(scope.row)">
           Sửa
         </el-button>
-        <el-button size="mini" type="danger"
-          @click="$refs.delete_wifi.open (scope.row)"
-        >
+        <el-button size="mini" type="danger" @click="$refs.delete_wifi.open (scope.row)">
           Xóa
         </el-button>
       </template>
@@ -73,54 +69,53 @@
     </el-pagination>
   </div>
 
-  <create-wifi-component ref="create_wifi" />
-  <edit-wifi-component ref="edit_wifi" />
-  <delete-wifi-component ref="delete_wifi" />
+  <create-wifi-component ref="create_wifi" @wifi_created="wifi_created" />
+  <edit-wifi-component ref="edit_wifi" @wifi_edited="wifi_edited"/>
+  <delete-wifi-component ref="delete_wifi" @wifi_deleted="wifi_deleted"/>
 </section>
 </template>
 
 <script>
+import { WIFI_URL } from '@/constants/endpoints'
+
 import CreateWifiComponent from './create'
 import EditWifiComponent from './edit'
 import DeleteWifiComponent from './delete'
 
 export default {
-  components: { CreateWifiComponent, EditWifiComponent, DeleteWifiComponent },
+  components: {
+    CreateWifiComponent,
+    EditWifiComponent,
+    DeleteWifiComponent
+  },
   data () {
     return {
-      tableData: [
-        {
-          country: 'Name',
-          internet_name: 7,
-          connection: 120,
-          speed_download: '20Mbps',
-          speed_upload: '7Mbps',
-          information: '5000Mb tốc độ 4G, miễn phí tốc độ thấp mỗi ngày',
-          prepayment: 800000,
-          price_day: 5000000
-        },
-        {
-          country: 'Name',
-          internet_name: 7,
-          connection: 120,
-          speed_download: '20Mbps',
-          speed_upload: '7Mbps',
-          information: '5000Mb tốc độ 4G, miễn phí tốc độ thấp mỗi ngày',
-          prepayment: 800000,
-          price_day: 5000000
-        },
-        {
-          country: 'Name',
-          internet_name: 7,
-          connection: 120,
-          speed_download: '20Mbps',
-          speed_upload: '7Mbps',
-          information: '5000Mb tốc độ 4G, miễn phí tốc độ thấp mỗi ngày',
-          prepayment: 800000,
-          price_day: 5000000
-        }
-      ]
+      tableData: [],
+      loading: false
     }
+  },
+  methods: {
+    async load_list () {
+      if (this.loading) return
+      this.loading = true
+      const response = await this.$services.do_request('get', WIFI_URL)
+      this.loading = false
+      if (response.status === 200) {
+        this.tableData = response.data.result
+      }
+    },
+    wifi_created (wifi) {
+      this.tableData.unshift(wifi)
+    },
+    wifi_edited (wifi) {
+      this.load_list()
+    },
+    wifi_deleted () {
+      this.load_list()
+    }
+  },
+  created () {
+    this.load_list()
   }
 }
 </script>
