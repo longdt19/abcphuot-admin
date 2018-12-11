@@ -12,6 +12,10 @@
     <el-form-item label="Giá" :label-width="formLabelWidth">
       <el-input v-model="price" autocomplete="off"></el-input>
     </el-form-item>
+
+    <el-form-item label="Quốc gia" :label-width="formLabelWidth">
+      <el-input v-model="country" autocomplete="off"></el-input>
+    </el-form-item>
   </el-form>
   <span slot="footer" class="dialog-footer">
     <el-button @click="dialogFormVisible = false">Hủy bỏ</el-button>
@@ -30,6 +34,7 @@ export default {
       owned: '',
       day_used: null,
       price: null,
+      country: '',
       formLabelWidth: '120px',
       sim: {},
       loading: false
@@ -40,6 +45,7 @@ export default {
       this.owned = sim.owned
       this.day_used = sim.day_used
       this.price = sim.price
+      this.country = sim.country
       this.sim = sim
       this.dialogFormVisible = true
     },
@@ -51,7 +57,8 @@ export default {
         'owned': this.owned,
         'day_used': this.day_used,
         'price': this.price,
-        'id': this.sim.id
+        'id': this.sim.id,
+        'country': this.country
       }
       const response = await this.$services.do_request('patch', SIM_URL, data)
       this.loading = false

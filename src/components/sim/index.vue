@@ -5,6 +5,12 @@
   </div>
 
   <el-table :data="tableData" style="width: 100%">
+    <el-table-column label="Ảnh" header-align="center" align="center">
+      <template slot-scope="scope" v-if="scope.row.image" >
+        <img :src="scope.row.image" alt="" width="50px">
+      </template>
+    </el-table-column>
+
     <el-table-column label="Nhà mạng" header-align="center" align="center">
       <template slot-scope="scope">
         {{scope.row.owned}}
@@ -20,6 +26,12 @@
     <el-table-column label="Giá" header-align="center" align="center">
       <template slot-scope="scope">
         {{scope.row.price}}
+      </template>
+    </el-table-column>
+
+    <el-table-column label="Quốc gia" header-align="center" align="center">
+      <template slot-scope="scope">
+        {{scope.row.country}}
       </template>
     </el-table-column>
 
@@ -69,6 +81,7 @@ export default {
       this.loading = true
       const response = await this.$services.do_request('get', SIM_URL)
       this.loading = false
+      console.log('response', response)
       if (response.status === 200) {
         this.tableData = response.data.result
       }

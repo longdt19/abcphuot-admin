@@ -33,6 +33,10 @@
       <el-input v-model="price_day" autocomplete="off"></el-input>
     </el-form-item>
 
+    <el-form-item label="Châu lục" :label-width="formLabelWidth">
+      <el-input v-model="continent" autocomplete="off"></el-input>
+    </el-form-item>
+
   </el-form>
   <span slot="footer" class="dialog-footer">
     <el-button @click="dialogFormVisible = false">Hủy bỏ</el-button>
@@ -56,6 +60,7 @@ export default {
       information: '',
       prepayment: null,
       price_day: null,
+      continent: '',
       formLabelWidth: '120px',
       wifi: {},
       loading: false
@@ -64,6 +69,7 @@ export default {
   methods: {
     open (wifi) {
       this.wifi = wifi
+      this.continent = wifi.continent
       this.country = wifi.country
       this.internet_name = wifi.internet_name
       this.connection = wifi.connection
@@ -87,7 +93,8 @@ export default {
         'information': this.information,
         'prepayment': this.prepayment,
         'price_day': this.price_day,
-        'id': this.wifi.id
+        'id': this.wifi.id,
+        'continent': this.continent
       }
       const response = await this.$services.do_request('patch', WIFI_URL, data)
       this.loading = false

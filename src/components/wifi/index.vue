@@ -5,6 +5,12 @@
   </div>
 
   <el-table :data="tableData" style="width: 100%">
+    <el-table-column label="Ảnh" header-align="center" align="center">
+      <template slot-scope="scope" v-if="scope.row.image" >
+        <img :src="scope.row.image" alt="" width="50px">
+      </template>
+    </el-table-column>
+
     <el-table-column label="Tên quốc gia" header-align="center" align="center">
       <template slot-scope="scope">
         {{scope.row.country}}
@@ -50,6 +56,12 @@
     <el-table-column label="Giá thuê 1 ngày" header-align="center" align="center">
       <template slot-scope="scope">
         {{scope.row.price_day}}
+      </template>
+    </el-table-column>
+
+    <el-table-column label="Châu lục" header-align="center" align="center">
+      <template slot-scope="scope">
+        {{scope.row.continent}}
       </template>
     </el-table-column>
 
