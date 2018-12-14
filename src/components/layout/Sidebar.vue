@@ -28,7 +28,7 @@
           <span>Blog</span>
         </template>
         <el-menu-item index="BlogList" @click.native="go_to('blog-list')">Các bài blog</el-menu-item>
-        <el-menu-item index="1-2">Upload</el-menu-item>
+        <el-menu-item index="BlogUpload" @click.native="go_to('blog-upload')">Upload</el-menu-item>
       </el-submenu>
 
     </el-menu>

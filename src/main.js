@@ -11,12 +11,14 @@ import App from './App'
 import router from './router'
 import store from './store'
 import axios from './plugins/axios'
+import i18n from './lang'
 
 import {mapGetters} from 'vuex'
 
 Vue.use(Element, {
   size: 'medium', // set element-ui default size
-  locale
+  locale,
+  i18n: (key, value) => i18n.t(key, value)
 })
 
 moment.locale('vi')
@@ -42,6 +44,7 @@ const createApp = () => {
     el: '#app',
     router,
     store,
+    i18n,
     components: {App},
     created () {
       this.$services.init_context(this)

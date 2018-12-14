@@ -61,7 +61,7 @@
 
     <el-table-column label="Châu lục" header-align="center" align="center">
       <template slot-scope="scope">
-        {{scope.row.continent}}
+        {{change_continent(scope.row.continent)}}
       </template>
     </el-table-column>
 
@@ -124,6 +124,15 @@ export default {
     },
     wifi_deleted () {
       this.load_list()
+    },
+    change_continent (continent) {
+      if (continent === 'asian') {
+        return 'Châu Á'
+      }
+      if (continent === 'eroupe') {
+        return 'Châu Âu'
+      }
+      return 'Khác'
     }
   },
   created () {
