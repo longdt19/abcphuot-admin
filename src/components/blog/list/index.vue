@@ -7,6 +7,12 @@
       </template>
     </el-table-column>
 
+    <el-table-column label="Banner" header-align="center" align="center">
+      <template slot-scope="scope">
+        <img :src="scope.row.banner_url" alt="" width="50px">
+      </template>
+    </el-table-column>
+
     <el-table-column label="Tiêu đề" header-align="center" align="center">
       <template slot-scope="scope">
         {{scope.row.name}}

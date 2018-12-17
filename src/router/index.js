@@ -6,6 +6,7 @@ import SimList from '@/components/sim'
 import WifiList from '@/components/wifi'
 import BlogList from '@/components/blog/list'
 import BlogUpload from '@/components/blog/upload'
+import OrderList from '@/components/order'
 
 Vue.use(Router)
 
@@ -37,6 +38,11 @@ export default new Router({
           path: 'blog-upload',
           name: 'BlogUpload',
           component: BlogUpload
+        },
+        {
+          path: 'order-list',
+          name: 'OrderList',
+          component: OrderList
         }
       ]
     }

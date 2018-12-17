@@ -23,6 +23,12 @@
         <span>Danh sách WIFI</span>
       </el-menu-item>
 
+      <el-menu-item index="OrderList" @click.native="go_to('order-list')">
+        <el-tooltip class="item" effect="dark" content="Thống kê chung" placement="right">
+        </el-tooltip>
+        <span>Danh sách Order</span>
+      </el-menu-item>
+
       <el-submenu index="1">
         <template slot="title">
           <span>Blog</span>

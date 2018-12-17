@@ -43,7 +43,7 @@ export default {
   components: {
     Tinymce
   },
-  data() {
+  data () {
     return {
       content: '',
       title: '',
@@ -62,13 +62,13 @@ export default {
       this.blog = blog
       this.centerDialogVisible = true
     },
-    async edit_post() {
+    async edit_post () {
       if (this.loading) return
       this.loading = true
       const data = {
         'id': this.blog.id,
         'category_id': this.category,
-        'content':  this.$refs.tinymce.get_content(),
+        'content': this.$refs.tinymce.get_content(),
         'name': this.title
       }
       console.log('data', data)
@@ -85,7 +85,7 @@ export default {
       }
     }
   },
-  created() {}
+  created () {}
 }
 </script>
 

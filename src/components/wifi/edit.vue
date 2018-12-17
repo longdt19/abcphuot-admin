@@ -60,7 +60,7 @@ import {
 } from '@/constants/endpoints'
 
 export default {
-  data() {
+  data () {
     return {
       dialogFormVisible: false,
       country: '',
@@ -78,7 +78,7 @@ export default {
     }
   },
   methods: {
-    open(wifi) {
+    open (wifi) {
       this.wifi = wifi
       this.continent = wifi.continent
       this.country = wifi.country
@@ -91,7 +91,7 @@ export default {
       this.price_day = wifi.price_day
       this.dialogFormVisible = true
     },
-    async edit_wifi() {
+    async edit_wifi () {
       if (this.loading) return
       this.loading = true
 

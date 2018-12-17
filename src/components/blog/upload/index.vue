@@ -1,9 +1,20 @@
 <template>
 <section>
   <div class="" style="padding-left:50px">
-
     <el-button @click='upload_post()'>Tải lên</el-button>
   </div>
+  <div class="" style="text-align: center">
+    <el-upload
+    class="avatar-uploader"
+    :action="url_action"
+    :show-file-list="false"
+    :on-success="handleAvatarSuccess"
+    :before-upload="beforeAvatarUpload">
+    <img v-if="imageUrl" :src="imageUrl" class="avatar">
+    <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+  </el-upload>
+  </div>
+
   <div class="" style="padding-top: 20px; padding-left:50px">
     <el-form>
       <el-form-item label="Tiêu đề" :label-width="formLabelWidth">
@@ -29,7 +40,7 @@
 </template>
 
 <script>
-import { POST_URL } from '@/constants/endpoints'
+import { POST_URL, IMAGE_URL } from '@/constants/endpoints'
 import Tinymce from './Tinymce'
 
 export default {
@@ -37,11 +48,14 @@ export default {
   components: {
     Tinymce
   },
-  data() {
+  data () {
     return {
       content: '',
       title: '',
       category: '',
+      imageUrl: '',
+      url_action: '',
+      image_id: '',
       formLabelWidth: '120px'
     }
   },
@@ -51,7 +65,8 @@ export default {
       this.loading = true
       const data_title = {
         'name': this.title,
-        'category_id': this.category
+        'category_id': this.category,
+        'banner': this.image_id
       }
       const res_title = await this.$services.do_request('post', POST_URL, data_title)
 
@@ -73,9 +88,26 @@ export default {
       } else {
         this.$message.error('Khởi tạo bài viết thất bại')
       }
+    },
+    handleAvatarSuccess (res, file) {
+      this.imageUrl = URL.createObjectURL(file.raw)
+      this.image_id = file.response.id
+    },
+    beforeAvatarUpload (file) {
+      const isLt2M = file.size / 1024 / 1024 < 2
+      if (file.type !== 'image/jpeg' && file.type !== 'image/png') {
+        this.$message.error('Avatar picture must be JPG and PNG format!')
+        return false
+      }
+      if (!isLt2M) {
+        this.$message.error('Avatar picture size can not exceed 2MB!')
+        return false
+      }
+      return true
     }
   },
-  created() {
+  created () {
+    this.url_action = process.env.BACKEND_URL + IMAGE_URL
   }
 }
 </script>
